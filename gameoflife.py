@@ -15,19 +15,14 @@ background = 'black'
 cell = 'white'
 
 class Field:
-    def __init__(field, width, height):
+    def __init__(field, width, height, cells=None):
         field.width = width
         field.height = height
-        field.size = width*height
-        field.cells = []
-        for x in range(field.size):
-            field.cells.append(random.getrandbits(1))
-        # print(field.cells)
-    def __init__(field, width, height, cells):
-        field.width = width
-        field.height = height
-        field.size = width*height
-        field.cells = cells
+        field.size = width * height
+        if cells is None:
+            field.cells = [random.getrandbits(1) for _ in range(field.size)]
+        else:
+            field.cells = cells
     def printField(field):
         print("Field")
         for y in range(field.height):
@@ -37,7 +32,7 @@ class Field:
                     line = line + "#"
                 else:
                     line = line + " "
-                if x != field.width:
+                if x != field.width - 1:
                     line += separator
             print(line)
         print()
@@ -84,7 +79,7 @@ class Field:
             line = ""
             for x in range(field.width):
                 line = line + str(field.getNeighbours(x,y))
-                if x != field.width:
+                if x != field.width - 1:
                     line += separator
             print(line)
         print()
